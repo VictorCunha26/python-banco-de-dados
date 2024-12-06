@@ -173,6 +173,8 @@ class Interface:
                 print(avengers.aplicar_gps())
                 return
         print(f"Vingador(a) '{nome_heroi}' não encontrado.")
+
+        #finalização da funções
        
 
 

@@ -66,7 +66,6 @@ class  Avengers:
 
     # fim mudança de estado
 
-    
     # Funções de convocação, aplicar tornozeleira e gps
     def convocar(self):
         self.convocacao = True
@@ -89,9 +88,6 @@ class  Avengers:
         return 'Chip GPS aplicado com sucesso!'
     
     #Fim da funções 
-    
-
-
 
     def carregar_herois():
         try:
