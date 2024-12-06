@@ -1,6 +1,6 @@
 from modelos.avengers import Avengers
 from modelos.interface import Interface as i
-from modelos.database import Database
+# from modelos.database import Database
 
 
 def main():

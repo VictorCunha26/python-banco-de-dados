@@ -1,4 +1,6 @@
 from modelos.database import Database
+import datetime
+
 class  Avengers:
 
     CATEGORIAS_PERMITIDAS = ['Humano', 'Meta-humano', 'Androide', 'Deidade', 'Alienígena']
@@ -69,7 +71,41 @@ class  Avengers:
     # Funções de convocação, aplicar tornozeleira e gps
     def convocar(self):
         self.convocacao = True
-        return f'{self.nome_heroi} convocado!'
+        try:
+            
+            db = Database()
+            db.connect()
+
+            nome_heroi = input('Digite o nome do herói que deseja convocar: ')
+            query_heroi = "SELECT id_heroi FROM heroi WHERE nome_heroi = %s"
+            heroi_id_resultado = db.select(query_heroi, (nome_heroi))
+
+            id_heroi = heroi_id_resultado [0][0]
+            
+            motivo = input("Motivo de convocação: ")
+            data_convocacao = datetime.now()
+            data_comparecimento = input("Data do comparecimento (dd/mm/aaaa) ou aperte Enter para deixar em branco: ")
+
+            if data_comparecimento:
+                data_comparecimento = datetime.strptime(data_comparecimento, "%d/%m/%Y")
+            else:
+                data_comparecimento = None
+
+            status = input("Status: ")
+
+            query= "INSERT INTO convocacao (id_heroi, motivo, data_convocacao, data_comparecimento, status) VALUES ( %s, %s, %s, %s, %s)"
+            values = (id_heroi, motivo, data_convocacao, data_comparecimento, status)
+            db.execute_query(query, values)
+
+            print(f'{self.nome_heroi} convocado!')
+        
+
+        except Exception as e:
+            print(f"Erro ao salvar vingador no banco de dados: {e}")
+
+        finally:
+            db.disconnect()
+
     
     def aplicar_tornozeleira(self):
         if self._convocacao:
